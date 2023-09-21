@@ -16,25 +16,29 @@
             <span class="fs-3">MyBooks</span>
         </a>
 
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{{ route('books.index') }}" class="btn btn-outline-secondary">Books list</a></li>
-        </ul>
+        <div class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <a href="{{ route('books.index') }}" class="btn btn-outline-secondary">Books list</a>
+
+            @isset($book)
+                <a href="{{ route('books.review.create', $book) }}" class="btn btn-success ms-2">Add a review <i class="fa fa-plus"></i></a>
+            @endisset
+        </div>
     </header>
 
     <main>
-        <h1>@yield('title')</h1>
+        @if( session()->has('success') )
+            <div class="alert alert-success alert-dismissible fade show">
+                <i class="fa fa-check-double"></i> {{ session('success') }}
 
-        <div class="row mt-5 mb-5">
-            <div class="col-12">
-                <form method="GET" name="f-search" id="f-search" action="{{ route('books.index') }}">
-                    <div class="input-group mb-3">
-                        <input type="text" name="title" id="src-title" value="{{ request('title') }}" class="form-control form-control-lg" placeholder="Search a book by title" aria-label="Search a book by title" aria-describedby="go-search">
-                        <button class="btn btn-secondary" type="submit" id="go-search">Go</button>
-                        <span class="input-group-text"><a href="{{ route('books.index') }}" class="text-warning-emphasis"><i class="fa fa-refresh"></i></a></span>
-                    </div>
-                </form>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        </div>
+        @endif
+
+        @include('books.blocks.search-form')
+
+        @include('books.blocks.filters')
+
+        <h1>@yield('title')</h1>
 
         @yield('content')
     </main>

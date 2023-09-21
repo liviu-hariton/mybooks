@@ -11,7 +11,8 @@
                         <h5 class="mb-1"><a href="{{ route('books.show', $book) }}" class="text-success-emphasis">{{ $book->title }}</a></h5>
 
                         <small>
-                            <span class="badge bg-primary rounded-pill">{{ number_format($book->reviews_avg_rating, 1) }}</span><br />
+                            <span class="badge bg-primary rounded-pill">{{ number_format($book->reviews_avg_rating, 1) }}</span>
+                            <x-star-rating :rating="$book->reviews_avg_rating" /><br />
                             out of {{ $book->reviews_count }} {{ Str::plural('review', $book->reviews_count) }}
                         </small>
                     </div>
@@ -25,6 +26,8 @@
                 </div>
             @endforeach
         </div>
+
+        {{ $books->withQueryString()->links() }}
     @else
         <div class="alert alert-warning">
             There are no books to display.
