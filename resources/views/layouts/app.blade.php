@@ -19,9 +19,9 @@
         <div class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <a href="{{ route('books.index') }}" class="btn btn-outline-secondary">Books list</a>
 
-            @isset($book)
+            @if(Route::is('books.show'))
                 <a href="{{ route('books.review.create', $book) }}" class="btn btn-success ms-2">Add a review <i class="fa fa-plus"></i></a>
-            @endisset
+            @endif
         </div>
     </header>
 
